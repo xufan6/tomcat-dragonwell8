@@ -38,6 +38,10 @@ RUN set -eux; \
 # sh removes env vars it doesn't support (ones with periods)
 # https://github.com/docker-library/tomcat/issues/77
     find ./bin/ -name '*.sh' -exec sed -ri 's|^#!/bin/sh$|#!/usr/bin/env bash|' '{}' +; \
+# fix permissions (especially for running as non-root)
+# https://github.com/docker-library/tomcat/issues/35
+    chmod -R +rX .; \
+    chmod 777 logs work; \
     exit 0
 
 FROM base AS build
@@ -61,16 +65,14 @@ RUN set -eux; \
     rm -rf "$nativeBuildDir"; \
     rm bin/tomcat-native.tar.gz; \
     mkdir target && mv include native-jni-lib target; \
+# fix permissions (especially for running as non-root)
+# https://github.com/docker-library/tomcat/issues/35
+    chmod -R +rX .; \
     exit 0
 
 FROM base AS prod
 COPY --from=build /usr/local/tomcat/target /usr/local/tomcat/
 COPY --from=build /lib64/libapr-1.so.0 /lib64/libapr-1.so.0
-RUN set -eux; \
-# fix permissions (especially for running as non-root)
-# https://github.com/docker-library/tomcat/issues/35
-    chmod -R +rX .; \
-    chmod 777 logs work
 # verify Tomcat Native is working properly
 RUN set -e \
     && nativeLines="$(catalina.sh configtest 2>&1)" \
