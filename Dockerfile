@@ -31,7 +31,7 @@ RUN set -eux; \
     done; \
     [ -n "$success" ]; \
     \
-    echo "$TOMCAT_SHA512 *tomcat.tar.gz" | sha512sum -c -; \
+    echo "$TOMCAT_SHA512 *tomcat.tar.gz" | sha512sum --strict --check -; \
     tar -xvf tomcat.tar.gz --strip-components=1; \
     rm bin/*.bat; \
     rm tomcat.tar.gz*; \
