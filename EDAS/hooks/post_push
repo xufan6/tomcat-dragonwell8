@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export EDAS_CONTAINER_VERSION=$(docker run --rm $IMAGE_NAME sh -c 'echo ${EDAS_CONTAINER_VERSION#V}')
+export ALI_TOMCAT_VERSION=$(docker run --rm $IMAGE_NAME sh -c 'echo ${ALI_TOMCAT_VERSION}')
+
+for e in edas-sar edas-sar-$EDAS_CONTAINER_VERSION ; do
+  for t in ${ALI_TOMCAT_VERSION} ${TOMCAT_VERSION%%.*} ; do
+    tag_name=$e-alitomcat$t
+    docker tag $IMAGE_NAME $DOCKER_REPO:$tag_name
+    docker push $DOCKER_REPO:$tag_name
+  done
+done
