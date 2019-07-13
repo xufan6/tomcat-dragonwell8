@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export TOMCAT_VERSION=$(docker run --rm $IMAGE_NAME sh -c 'echo $TOMCAT_VERSION')
+
+for i in ${TOMCAT_VERSION} ${TOMCAT_VERSION%.*} ${TOMCAT_VERSION%.*.*} ; do
+  docker tag $IMAGE_NAME $DOCKER_REPO:$i
+  docker push $DOCKER_REPO:$i
+done
