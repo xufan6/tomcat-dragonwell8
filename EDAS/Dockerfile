@@ -1,4 +1,4 @@
-FROM xufan6/dragonwell8:8.0.0-GA
+FROM xufan6/dragonwell8:8
 LABEL maintainer="xufan6@gmail.com"
 
 ENV CATALINA_HOME /usr/local/tomcat
@@ -8,8 +8,8 @@ WORKDIR $CATALINA_HOME
 
 ENV ALI_TOMCAT_VERSION=7.0.92 \
     ALI_TOMCAT_SHA512=2934408cd3a0ec7fc158e0c0f2e7ca1bf5a27d0dba0643955efa28ba03b68025c5968cd262528e2f1c61366f828d6c3f1a20d8a5feb528cf7bfbb9b2518aed07 \
-    EDAS_CONTAINER_VERSION=V3.5.3 \
-    EDAS_CONTAINER_SHA512=6a723a7b2eacd2321174f18f9201f813bfd6a6e9983aa72cccfa9220306cf6ade5f210a886816cc688ffbd7fc784496340aef672c3c38c1f279af758f024b34d
+    EDAS_CONTAINER_VERSION=V3.5.4 \
+    EDAS_CONTAINER_SHA512=57beb2e74e75607047ff28eb73d6551a60c4a1deb7526fcda0f1525cddcb3d3341e2d9af33303de1dad96149c810fcdc7a6770cc919117d0042705555178820d
 
 ENV ALI_TOMCAT_TGZ_URL="https://edas-hz.oss-cn-hangzhou.aliyuncs.com/edas-container/$ALI_TOMCAT_VERSION/taobao-tomcat-production-$ALI_TOMCAT_VERSION.tar.gz" \
     EDAS_CONTAINER_TGZ_URL="https://edas-hz.oss-cn-hangzhou.aliyuncs.com/edas-plugins/edas.sar.${EDAS_CONTAINER_VERSION}/taobao-hsf.tgz"

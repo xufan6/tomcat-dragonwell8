@@ -1,4 +1,4 @@
-FROM xufan6/dragonwell8:8.0.0-GA AS base
+FROM xufan6/dragonwell8:8 AS base
 LABEL maintainer="xufan6@gmail.com"
 
 ENV CATALINA_HOME /usr/local/tomcat
@@ -82,6 +82,7 @@ RUN set -e \
         echo >&2 "$nativeLines"; \
         exit 1; \
     fi
+ENV LANG=en_US.UTF-8
 
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
